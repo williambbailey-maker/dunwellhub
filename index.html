@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dunwell</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #FAFAF8;
+      --ink:        #141414;
+      --ink-mid:    #555550;
+      --ink-light:  #9A9993;
+      --rule:       #E2E0DA;
+      --accent:     #0040FF;
+      --mono:       'IBM Plex Mono', monospace;
+      --sans:       'IBM Plex Sans', sans-serif;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header { padding: 80px 0 72px; }
+
+    .name {
+      font-family: var(--mono);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .bio {
+      font-size: 1.125rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.65;
+      max-width: 400px;
+    }
+
+    /* ── Section label ── */
+    .label {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ── App list ── */
+    .apps { list-style: none; }
+
+    .app { border-bottom: 1px solid var(--rule); }
+
+    .app a {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 26px 0;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .app a:hover .app-name  { color: var(--accent); }
+    .app a:hover .arrow     { transform: translateX(4px); color: var(--accent); }
+
+    .app-body { flex: 1; min-width: 0; }
+
+    .app-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .app-name {
+      font-family: var(--mono);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.5625rem;
+      font-weight: 400;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 2px 5px;
+      line-height: 1.4;
+    }
+
+    .app-desc {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+    }
+
+    .arrow {
+      font-family: var(--mono);
+      font-size: 0.9375rem;
+      color: var(--ink-light);
+      flex-shrink: 0;
+      margin-top: 1px;
+      transition: transform 0.15s ease, color 0.15s ease;
+    }
+
+    /* ── Footer ── */
+    footer { padding: 60px 0 56px; margin-top: auto; }
+
+    .contact {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .contact a {
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+      color: var(--ink-mid);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: color 0.15s ease;
+    }
+
+    .contact a:hover { color: var(--accent); }
+
+    .contact svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      stroke: currentColor;
+    }
+
+    @media (max-width: 480px) {
+      header { padding: 52px 0 48px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <p class="name">dunwell</p>
+    </header>
+
+    <main>
+      <p class="label">Apps</p>
+      <ul class="apps">
+
+        <li class="app">
+          <a href="https://mtl.dunwell.co" target="_blank" rel="noopener noreferrer">
+            <div class="app-body">
+              <div class="app-row">
+                <span class="app-name">Métropole</span>
+                <span class="tag">PWA</span>
+              </div>
+              <p class="app-desc">Montreal Jazz Festival trip planner. 141 shows, curated venues, shareable real-time plans.</p>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+        </li>
+
+      </ul>
+    </main>
+
+    <footer>
+      <p class="label">Contact</p>
+      <div class="contact">
+        <a href="https://github.com/williambbaileymaker" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="mailto:will@yourdomain.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          will@yourdomain.com
+        </a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
