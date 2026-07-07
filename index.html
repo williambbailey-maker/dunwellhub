@@ -40,12 +40,35 @@
     letter-spacing:0.01em;
   }
   .nav-links{
-    display:flex; gap:36px;
+    display:flex; align-items:center; gap:36px;
     font-family:'JetBrains Mono', monospace;
     font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
     color:var(--slate);
   }
   .nav-links a:hover{ color:var(--ink); }
+
+  /* Apps dropdown */
+  .apps-dropdown{ position:relative; }
+  .apps-dropdown summary{
+    list-style:none; cursor:pointer;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
+  }
+  .apps-dropdown summary::-webkit-details-marker{ display:none; }
+  .apps-dropdown[open] summary{ color:var(--ink); }
+  .apps-menu{
+    position:absolute; top:calc(100% + 16px); left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column;
+    min-width:180px; padding:10px 0;
+    background:var(--navy); border:1px solid var(--rule); border-radius:8px;
+    box-shadow:0 16px 32px -12px rgba(0,0,0,0.5);
+    text-transform:none; letter-spacing:normal;
+  }
+  .apps-menu a{
+    font-family:'Fraunces', serif; font-size:16px; color:var(--ink);
+    padding:9px 20px;
+  }
+  .apps-menu a:hover{ color:var(--brass); }
 
   /* HERO */
   .hero{
@@ -117,7 +140,16 @@
   <nav class="nav">
     <div class="nav-word">dunwell</div>
     <div class="nav-links">
-      <a href="#metropole">Apps</a>
+      <details class="apps-dropdown">
+        <summary>Apps</summary>
+        <div class="apps-menu">
+          <a href="https://mtl.dunwell.co">M&eacute;tropole</a>
+          <a href="https://hyoshi.dunwell.co">Hyoshi</a>
+          <a href="https://db.dunwell.co">db</a>
+          <a href="https://sensei.nyc">Sensei</a>
+          <a href="https://nearnosh.dunwell.co">NearNosh</a>
+        </div>
+      </details>
       <a href="mailto:william@dunwell.co">Contact</a>
     </div>
   </nav>
