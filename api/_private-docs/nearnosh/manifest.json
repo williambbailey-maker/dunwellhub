@@ -1,0 +1,44 @@
+{
+  "set": "nearnosh",
+  "title": "NearNosh — Framework Package",
+  "updated": "2026-07",
+  "featured": [
+    { "file": "NearNosh-COMBINED-full-package.pdf", "title": "Complete Package", "desc": "All 12 documents, single PDF" },
+    { "file": "NearNosh-markdown-sources.zip", "title": "Markdown Sources", "desc": "Editable canonical copies" }
+  ],
+  "groups": [
+    {
+      "name": "Start Here",
+      "docs": [
+        { "file": "NearNosh-00-index.pdf", "num": "00", "title": "Index & Punch List", "desc": "What each doc is, who it's for, open items" }
+      ]
+    },
+    {
+      "name": "Investor-Facing",
+      "docs": [
+        { "file": "NearNosh-01-one-pager.pdf", "num": "01", "title": "One-Pager", "desc": "The forwardable first-contact doc" },
+        { "file": "NearNosh-04-business-model.pdf", "num": "04", "title": "Business Model", "desc": "Revenue streams, economics, falsifiers" },
+        { "file": "NearNosh-05-competitive-analysis.pdf", "num": "05", "title": "Competitive Analysis", "desc": "Positioning, matrix, pre-mortems" },
+        { "file": "NearNosh-11-pitch-deck-script.pdf", "num": "11", "title": "Pitch Deck Script", "desc": "12 slides, speaker lines, appendix" }
+      ]
+    },
+    {
+      "name": "Product & Engineering",
+      "docs": [
+        { "file": "NearNosh-02-prd.pdf", "num": "02", "title": "Product Requirements", "desc": "Personas, principles, v1 scope, roster" },
+        { "file": "NearNosh-03-technical-architecture.pdf", "num": "03", "title": "Technical Architecture", "desc": "Stack, schema, pipeline, scaling" },
+        { "file": "NearNosh-06-brand-design-system.pdf", "num": "06", "title": "Brand & Design System", "desc": "Palette, type, patterns, voice" },
+        { "file": "NearNosh-07-roadmap.pdf", "num": "07", "title": "Roadmap & Milestones", "desc": "Milestone-gated phases, exit criteria" },
+        { "file": "NearNosh-08-metrics-framework.pdf", "num": "08", "title": "Metrics Framework", "desc": "North stars, event schema, dashboard" }
+      ]
+    },
+    {
+      "name": "Internal Only",
+      "internal": true,
+      "docs": [
+        { "file": "NearNosh-09-product-overview-demo.pdf", "num": "09", "title": "Demo Script", "desc": "Five beats, prepared answers" },
+        { "file": "NearNosh-10-entity-ownership.pdf", "num": "10", "title": "Entity & Ownership", "desc": "Structure options, IP checklist" }
+      ]
+    }
+  ]
+}

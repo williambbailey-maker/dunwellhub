@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Vault — Dunwell</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#28374A;
+    --ink:#F1E8D6;
+    --rule:rgba(241,232,214,0.16);
+    --slate:rgba(241,232,214,0.62);
+    --brass:#C9A876;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--navy); color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  a{ color:inherit; }
+  .serif{ font-family:'Fraunces', serif; }
+  [hidden]{ display:none !important; }
+
+  /* NAV */
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:32px 24px; max-width:720px; margin:0 auto;
+  }
+  .nav-word{ font-family:'Fraunces', serif; font-weight:500; font-size:26px; text-decoration:none; }
+  .crumb{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--slate);
+  }
+
+  /* GATE */
+  .gate{ min-height:60vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+  .gate-card{ max-width:340px; width:100%; }
+  .gate-title{ font-size:38px; margin-bottom:14px; }
+  .gate-copy{ font-size:14px; color:var(--slate); line-height:1.6; margin-bottom:28px; }
+  #gate-form{ display:flex; flex-direction:column; gap:12px; }
+  #gate-password{
+    font-family:'JetBrains Mono', monospace; font-size:14px;
+    background:transparent; border:1px solid var(--rule); border-radius:6px;
+    padding:14px 16px; color:var(--ink); width:100%;
+  }
+  #gate-password:focus{ outline:none; border-color:var(--brass); }
+  #gate-password::placeholder{ color:var(--slate); }
+  #gate-submit{
+    font-family:'Space Grotesk', sans-serif; font-weight:500; font-size:14px;
+    background:var(--ink); color:var(--navy); border:none; border-radius:6px;
+    padding:14px; cursor:pointer;
+  }
+  #gate-submit:disabled{ opacity:.5; cursor:default; }
+  #gate-submit:hover:not(:disabled){ opacity:.9; }
+  .gate-error{ margin-top:14px; font-size:13px; color:var(--brass); min-height:1em; }
+
+  /* LIBRARY */
+  .library{ max-width:720px; margin:0 auto; padding:0 24px 88px; }
+  .lib-header{
+    display:flex; align-items:flex-end; justify-content:space-between; gap:16px;
+    padding-bottom:28px; margin-bottom:8px; border-bottom:1px solid var(--rule);
+  }
+  .lib-title{ font-size:34px; margin-top:6px; }
+  .signout{
+    background:none; border:none; color:var(--slate); cursor:pointer; padding:8px 0;
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  }
+  .signout:hover{ color:var(--ink); }
+
+  .rule{ height:1px; background:var(--rule); margin:48px 0; }
+
+  .set-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin:36px 0 18px; flex-wrap:wrap; }
+  .set-title{ font-size:23px; }
+  .set-updated{ font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.06em; color:var(--slate); white-space:nowrap; }
+
+  .featured-row{ display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
+
+  .doc-group{ margin-top:30px; }
+  .group-label{
+    display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--slate); padding-bottom:12px; margin-bottom:2px; border-bottom:1px solid var(--rule);
+  }
+  .internal-tag{
+    font-family:'JetBrains Mono', monospace; font-size:9.5px; letter-spacing:.06em;
+    color:var(--brass); border:1px solid var(--brass); border-radius:3px; padding:1px 6px;
+  }
+
+  .doc-card{
+    display:flex; align-items:center; gap:14px;
+    padding:16px 4px; border-bottom:1px solid var(--rule);
+  }
+  .doc-card.featured{
+    border:1px solid var(--rule); border-radius:8px; padding:18px 16px;
+  }
+  .doc-icon{ color:var(--slate); flex-shrink:0; display:flex; }
+  .doc-body{ flex:1; min-width:0; }
+  .doc-title{ font-size:15px; margin-bottom:3px; }
+  .doc-num{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--slate); margin-right:8px; }
+  .doc-desc{ font-size:12.5px; color:var(--slate); line-height:1.5; }
+  .doc-actions{ display:flex; gap:8px; flex-shrink:0; }
+  .doc-btn{
+    display:inline-flex; align-items:center; gap:5px;
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--slate); text-decoration:none;
+    border:1px solid var(--rule); border-radius:5px; padding:9px 11px;
+  }
+  .doc-btn:hover{ color:var(--ink); border-color:var(--slate); }
+
+  .empty-note{ font-size:13px; color:var(--slate); padding:24px 0; }
+
+  @media (max-width:480px){
+    .doc-card{ flex-wrap:wrap; }
+    .doc-actions{ width:100%; margin-top:8px; margin-left:30px; }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="/" class="nav-word">dunwell</a>
+    <span class="crumb">DUNWELL / VAULT</span>
+  </nav>
+
+  <main id="gate" class="gate">
+    <div class="gate-card">
+      <h1 class="gate-title serif">Vault</h1>
+      <p class="gate-copy">Private client &amp; project documents. Access is by invitation.</p>
+      <form id="gate-form" autocomplete="off">
+        <input id="gate-password" type="password" name="password" placeholder="Password" autocomplete="current-password" required>
+        <button type="submit" id="gate-submit">Enter</button>
+      </form>
+      <p id="gate-error" class="gate-error"></p>
+    </div>
+  </main>
+
+  <main id="library" class="library" hidden>
+    <header class="lib-header">
+      <h1 class="serif lib-title">Vault</h1>
+      <button id="signout" class="signout" type="button">Sign out</button>
+    </header>
+    <div id="sets"></div>
+  </main>
+
+<script>
+(function(){
+  var gate = document.getElementById('gate');
+  var library = document.getElementById('library');
+  var form = document.getElementById('gate-form');
+  var pwInput = document.getElementById('gate-password');
+  var errEl = document.getElementById('gate-error');
+  var submitBtn = document.getElementById('gate-submit');
+  var setsEl = document.getElementById('sets');
+  var signoutBtn = document.getElementById('signout');
+
+  var failCount = 0;
+
+  var icons = {
+    doc: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>',
+    view: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>',
+    download: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>'
+  };
+
+  function escapeHtml(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+
+  function docHref(set, file, download){
+    var p = new URLSearchParams({ set: set, file: file });
+    if (download) p.set('download', '1');
+    return '/api/doc?' + p.toString();
+  }
+
+  function cardHtml(set, doc, featured){
+    var numHtml = doc.num ? '<span class="doc-num">' + escapeHtml(doc.num) + '</span>' : '';
+    return (
+      '<div class="doc-card' + (featured ? ' featured' : '') + '">' +
+        '<div class="doc-icon">' + icons.doc + '</div>' +
+        '<div class="doc-body">' +
+          '<p class="doc-title serif">' + numHtml + escapeHtml(doc.title) + '</p>' +
+          '<p class="doc-desc">' + escapeHtml(doc.desc) + '</p>' +
+        '</div>' +
+        '<div class="doc-actions">' +
+          '<a class="doc-btn" href="' + docHref(set, doc.file, false) + '" target="_blank" rel="noopener">' + icons.view + ' View</a>' +
+          '<a class="doc-btn" href="' + docHref(set, doc.file, true) + '">' + icons.download + ' Download</a>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function groupHtml(set, group){
+    var tag = group.internal ? '<span class="internal-tag">Internal</span>' : '';
+    var docs = (group.docs || []).map(function(d){ return cardHtml(set, d, false); }).join('');
+    return (
+      '<div class="doc-group">' +
+        '<p class="group-label">' + escapeHtml(group.name) + tag + '</p>' +
+        docs +
+      '</div>'
+    );
+  }
+
+  function setHtml(setData){
+    var featured = (setData.featured || []).map(function(d){ return cardHtml(setData.set, d, true); }).join('');
+    var groups = (setData.groups || []).map(function(g){ return groupHtml(setData.set, g); }).join('');
+    return (
+      '<section class="doc-set">' +
+        '<div class="set-head">' +
+          '<h2 class="serif set-title">' + escapeHtml(setData.title) + '</h2>' +
+          '<p class="set-updated">' + escapeHtml((setData.updated || '').toUpperCase()) + '</p>' +
+        '</div>' +
+        '<div class="featured-row">' + featured + '</div>' +
+        groups +
+      '</section>'
+    );
+  }
+
+  function renderSets(sets){
+    if (!sets || !sets.length){
+      setsEl.innerHTML = '<p class="empty-note">No document sets yet.</p>';
+      return;
+    }
+    setsEl.innerHTML = sets.map(setHtml).join('<div class="rule"></div>');
+  }
+
+  function showLibrary(sets){
+    renderSets(sets);
+    gate.hidden = true;
+    library.hidden = false;
+  }
+
+  function showGate(){
+    library.hidden = true;
+    gate.hidden = false;
+  }
+
+  function loadManifest(){
+    return fetch('/api/manifest', { credentials: 'same-origin' })
+      .then(function(res){
+        if (res.ok) return res.json().then(function(data){ showLibrary(data.sets); return true; });
+        showGate();
+        return false;
+      })
+      .catch(function(){ showGate(); return false; });
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    errEl.textContent = '';
+    submitBtn.disabled = true;
+
+    fetch('/api/unlock', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ password: pwInput.value })
+    }).then(function(res){
+      if (res.ok){
+        failCount = 0;
+        pwInput.value = '';
+        return loadManifest().then(function(){ submitBtn.disabled = false; });
+      }
+      failCount++;
+      errEl.textContent = 'Incorrect password.';
+      var backoff = Math.min(failCount, 5) * 1000;
+      setTimeout(function(){ submitBtn.disabled = false; }, backoff);
+    }).catch(function(){
+      errEl.textContent = 'Something went wrong. Try again.';
+      submitBtn.disabled = false;
+    });
+  });
+
+  signoutBtn.addEventListener('click', function(){
+    fetch('/api/unlock', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ logout: true })
+    }).catch(function(){}).then(showGate);
+  });
+
+  loadManifest();
+})();
+</script>
+
+</body>
+</html>

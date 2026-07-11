@@ -1,0 +1,19 @@
+{
+  "functions": {
+    "api/manifest.js": { "includeFiles": "api/_private-docs/**" },
+    "api/doc.js": { "includeFiles": "api/_private-docs/**" }
+  },
+  "rewrites": [
+    { "source": "/vault", "destination": "/vault.html" }
+  ],
+  "headers": [
+    {
+      "source": "/vault",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/vault.html",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ]
+}
