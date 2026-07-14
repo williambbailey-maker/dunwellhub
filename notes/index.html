@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dunwell — Notes</title>
+<style>
+  :root {
+    --ground: #e8ebe6;
+    --surface: #f4f6f2;
+    --ink: #1b231d;
+    --muted: #616b62;
+    --faint: #8a938a;
+    --line: #d3d8cf;
+    --accent: #8f3d2f;
+    --accent-soft: rgba(143, 61, 47, 0.1);
+    --good: #4f7a52;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #12160f;
+      --surface: #1a1f16;
+      --ink: #e7eae1;
+      --muted: #9aa694;
+      --faint: #6f7a6c;
+      --line: #2b332a;
+      --accent: #d8785f;
+      --accent-soft: rgba(216, 120, 95, 0.14);
+      --good: #8fbf8f;
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #e8ebe6;
+    --surface: #f4f6f2;
+    --ink: #1b231d;
+    --muted: #616b62;
+    --faint: #8a938a;
+    --line: #d3d8cf;
+    --accent: #8f3d2f;
+    --accent-soft: rgba(143, 61, 47, 0.1);
+    --good: #4f7a52;
+  }
+  :root[data-theme="dark"] {
+    --ground: #12160f;
+    --surface: #1a1f16;
+    --ink: #e7eae1;
+    --muted: #9aa694;
+    --faint: #6f7a6c;
+    --line: #2b332a;
+    --accent: #d8785f;
+    --accent-soft: rgba(216, 120, 95, 0.14);
+    --good: #8fbf8f;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .page {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.25rem) clamp(1.15rem, 4vw, 2rem) 4rem;
+  }
+
+  /* ---- Masthead ---- */
+  .masthead { border-bottom: 2px solid var(--ink); padding-bottom: 1.4rem; }
+  .mast-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .mast-mark {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .mast-mark .diamond { font-size: 0.62rem; vertical-align: 0.1em; margin-right: 0.5em; }
+
+  .theme-toggle {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.32rem 0.7rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--muted); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .mast-title {
+    font-size: clamp(2.3rem, 7vw, 3.4rem);
+    line-height: 1.02;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 1.1rem 0 0;
+    text-wrap: balance;
+  }
+  .mast-title em { font-style: italic; color: var(--accent); }
+  .mast-sub {
+    color: var(--muted);
+    font-size: 1.02rem;
+    margin: 0.6rem 0 0;
+    max-width: 34rem;
+  }
+
+  .mast-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.6rem;
+    margin: 1.3rem 0 0;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.03em;
+  }
+  .mast-meta > div { display: flex; flex-direction: column; gap: 0.15rem; }
+  .mast-meta dt {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.64rem;
+    color: var(--faint);
+  }
+  .mast-meta dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* ---- Section shell ---- */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 2.6rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ---- How it's kept ---- */
+  .howto {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1.15rem 1.35rem 1.25rem;
+  }
+  .howto ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .howto li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 1.7rem 1fr;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.97rem;
+  }
+  .howto li::before {
+    content: counter(step);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .howto b { font-family: var(--serif); font-weight: 700; }
+
+  /* ---- Project index ---- */
+  .projects { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .proj-chip {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+    background: var(--surface);
+  }
+  .proj-chip .count { color: var(--faint); }
+
+  /* ---- Entries ---- */
+  .entries { display: flex; flex-direction: column; }
+  .entry {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0 1.6rem;
+    padding: 1.7rem 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+  .entry:first-child { border-top: none; }
+
+  .entry-rail { display: flex; flex-direction: column; gap: 0.4rem; padding-top: 0.15rem; }
+  .entry-ver {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    padding: 0.15rem 0.45rem;
+    align-self: start;
+    font-variant-numeric: tabular-nums;
+  }
+  .entry-date {
+    font-family: var(--mono);
+    font-size: 0.73rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .entry-stamp {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px dashed var(--accent);
+    border-radius: 3px;
+    padding: 0.1rem 0.35rem;
+    align-self: start;
+    transform: rotate(-3deg);
+  }
+
+  .entry-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.7rem;
+    margin-bottom: 0.6rem;
+  }
+  .proj-tag {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--good);
+    border: 1px solid var(--good);
+    border-radius: 999px;
+    padding: 0.12rem 0.5rem;
+    position: relative;
+    top: -0.12rem;
+  }
+  .entry-title {
+    font-size: 1.42rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .changes { margin: 0.2rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.42rem; }
+  .changes li {
+    position: relative;
+    padding-left: 1.15rem;
+    font-size: 0.98rem;
+    color: var(--ink);
+  }
+  .changes li::before {
+    content: "";
+    position: absolute;
+    left: 0.05rem;
+    top: 0.62em;
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 50%;
+    background: var(--good);
+  }
+  .changes li.removed::before { background: transparent; border: 1px solid var(--faint); }
+
+  .diary {
+    margin: 0.95rem 0 0;
+    padding: 0.55rem 0 0.55rem 0.95rem;
+    border-left: 2px solid var(--line);
+    font-style: italic;
+    font-size: 0.96rem;
+    color: var(--muted);
+  }
+  .diary b { font-style: normal; font-weight: 700; color: var(--ink); }
+
+  /* ---- Open threads ---- */
+  .threads { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+  .threads li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.7rem;
+    align-items: baseline;
+    font-size: 0.97rem;
+  }
+  .threads .dot {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 0.05rem;
+  }
+  .threads b { font-weight: 700; }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--faint);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  a { color: var(--accent); text-underline-offset: 2px; }
+
+  @media (max-width: 34rem) {
+    .entry { grid-template-columns: 1fr; gap: 0.7rem; }
+    .entry-rail { flex-direction: row; align-items: center; gap: 0.6rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="masthead">
+    <div class="mast-top">
+      <span class="mast-mark"><span class="diamond">◆</span>Notes</span>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme">Theme</button>
+    </div>
+    <h1 class="mast-title">Changelog &amp; <em>diary</em></h1>
+    <p class="mast-sub">A running record of studio work across Dunwell projects — what shipped, when, and the notes behind it. Newest first.</p>
+    <dl class="mast-meta">
+      <div><dt>Kept by</dt><dd>William &amp; Claude</dd></div>
+      <div><dt>Projects</dt><dd>1</dd></div>
+      <div><dt>Entries</dt><dd>4</dd></div>
+      <div><dt>Updated</dt><dd>2026-07-14</dd></div>
+    </dl>
+  </header>
+
+  <h2 class="section-label">How these notes are kept</h2>
+  <section class="howto">
+    <ol>
+      <li><span><b>Request a period.</b> Ask for the work done over a stretch of time — e.g. “the last week,” “since Thursday,” a sprint.</span></li>
+      <li><span><b>It gets generated.</b> The work list is pulled from commits and the session, then summarized into entries.</span></li>
+      <li><span><b>Post to the journal.</b> Ask Claude to add it here — each release becomes a dated entry with its changes and a short note.</span></li>
+    </ol>
+  </section>
+
+  <h2 class="section-label">Projects</h2>
+  <nav class="projects" aria-label="Projects in this log">
+    <span class="proj-chip">NearNosh <span class="count">· 4</span></span>
+  </nav>
+
+  <h2 class="section-label">Entries</h2>
+  <main class="entries">
+
+    <article class="entry" data-project="nearnosh">
+      <div class="entry-rail">
+        <span class="entry-ver">v0.3.1</span>
+        <time class="entry-date">Jul 11, 2026</time>
+        <span class="entry-stamp">Latest</span>
+      </div>
+      <div class="entry-body">
+        <div class="entry-head">
+          <span class="proj-tag">NearNosh</span>
+          <h3 class="entry-title">Sources as a dropdown</h3>
+        </div>
+        <ul class="changes">
+          <li>The About card’s source list now collapses behind a “Sources ▾” disclosure, open on tap.</li>
+          <li>The flip card re-measures its height on toggle so it grows and shrinks to fit.</li>
+        </ul>
+        <p class="diary">Small bit of housekeeping so the sources won’t crowd the card as more “best-of” lists get added.</p>
+      </div>
+    </article>
+
+    <article class="entry" data-project="nearnosh">
+      <div class="entry-rail">
+        <span class="entry-ver">v0.3.0</span>
+        <time class="entry-date">Jul 10, 2026</time>
+      </div>
+      <div class="entry-body">
+        <div class="entry-head">
+          <span class="proj-tag">NearNosh</span>
+          <h3 class="entry-title">Green wordmark restored &amp; swipe-to-clear</h3>
+        </div>
+        <ul class="changes">
+          <li>Reverted the wordmark to its dark-green “Near” / light-green “Nosh” two-tone, unified across the header, splash, and About card on one set of tokens.</li>
+          <li>Filters: swipe the sheet down to clear everything and return to the full list.</li>
+        </ul>
+        <p class="diary">The wordmark had drifted to orange — pulled it back to the two greens. <b>Note:</b> because the app is locked to dark mode, the “dark green” renders as a legible deeper green on the dark ground rather than true black-green.</p>
+      </div>
+    </article>
+
+    <article class="entry" data-project="nearnosh">
+      <div class="entry-rail">
+        <span class="entry-ver">v0.2.0</span>
+        <time class="entry-date">Jul 10, 2026</time>
+      </div>
+      <div class="entry-body">
+        <div class="entry-head">
+          <span class="proj-tag">NearNosh</span>
+          <h3 class="entry-title">Dark mode locked, new icon, amenity tags</h3>
+        </div>
+        <ul class="changes">
+          <li>Locked the app to dark mode — first load and every load, browser and PWA, with no flash of light.</li>
+          <li>New fork-and-knife app icon (replaced the map pin); redrew the settings gear as a clean cog.</li>
+          <li>Added amenity tags — Walk-In Friendly, Cash Only, Outdoor Seating, Quick Meal — backed by a Supabase table you can curate by hand.</li>
+          <li>Added an “Open now” tag (timezone-aware to NYC) and a Breakfast-only filter.</li>
+        </ul>
+        <p class="diary">Tags read from Supabase so they’re editable without a deploy; seeded a few (including some that are open now) to preview the look. <b>Caveat:</b> the live Supabase read couldn’t be verified from the sandbox — outbound network is blocked there.</p>
+      </div>
+    </article>
+
+    <article class="entry" data-project="nearnosh">
+      <div class="entry-rail">
+        <span class="entry-ver">v0.1.0</span>
+        <time class="entry-date">Jul 9–10, 2026</time>
+      </div>
+      <div class="entry-body">
+        <div class="entry-head">
+          <span class="proj-tag">NearNosh</span>
+          <h3 class="entry-title">Initial build-out &amp; first release</h3>
+        </div>
+        <ul class="changes">
+          <li>Applied the “Fresh Market” design system — cream/sage/citrus palette with Fraunces, Space Grotesk, and JetBrains Mono.</li>
+          <li>Flip cards: info-“i” toggle, an “Open in Google Maps” button, list badges, and a blurb on the back.</li>
+          <li>Turned the header into a flippable About card; built two-tier filters plus a Settings menu (units, dietary).</li>
+          <li>Added a Google map view, consolidated the NYT 2023–2026 lists, and wrote a Google Places enrich script.</li>
+          <li class="removed">Removed along the way: “Best of the Best,” neighborhood search, the “sorted by distance” label, and the community thumbs-voting UI (backend kept).</li>
+          <li>Shipped as a PWA deploying to Vercel.</li>
+        </ul>
+        <p class="diary">Consolidation matches the same spot across lists by name and proximity, then sorts by distance. Coordinates and some list subsets are approximate — flagged honestly in the repo.</p>
+      </div>
+    </article>
+
+  </main>
+
+  <h2 class="section-label">Open threads</h2>
+  <ul class="threads">
+    <li><span class="dot">Parked</span><span><b>Time Out import.</b> Blocked by their bot protection, and no geocoder is reachable in the sandbox. Will build the list from a paste.</span></li>
+    <li><span class="dot">Todo</span><span><b>Branch cleanup.</b> Switch the repo’s default branch to <code>main</code>, then delete the feature branch.</span></li>
+    <li><span class="dot">Idea</span><span><b>Real password.</b> If this log moves onto dunwell.co, add server-side protection (Vercel) instead of relying on an unguessable URL.</span></li>
+  </ul>
+
+  <footer>
+    <span>Dunwell · Notes</span>
+    <span>Updated 2026-07-14</span>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById("themeToggle");
+    var stored = null;
+    try { stored = localStorage.getItem("notes.theme"); } catch (e) {}
+    if (stored === "dark" || stored === "light") root.setAttribute("data-theme", stored);
+    function current() {
+      var attr = root.getAttribute("data-theme");
+      if (attr) return attr;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    btn.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("notes.theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
