@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Dunwell — Work Log</title>
+<title>Dunwell — Notes</title>
 <style>
   :root {
     --ground: #e8ebe6;
@@ -366,7 +366,7 @@
 <div class="page">
   <header class="masthead">
     <div class="mast-top">
-      <span class="mast-mark"><span class="diamond">◆</span>Work Log</span>
+      <span class="mast-mark"><span class="diamond">◆</span>Notes</span>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme">Theme</button>
     </div>
     <h1 class="mast-title">Changelog &amp; <em>diary</em></h1>
@@ -379,7 +379,7 @@
     </dl>
   </header>
 
-  <h2 class="section-label">How this log is kept</h2>
+  <h2 class="section-label">How these notes are kept</h2>
   <section class="howto">
     <ol>
       <li><span><b>Request a period.</b> Ask for the work done over a stretch of time — e.g. “the last week,” “since Thursday,” a sprint.</span></li>
@@ -485,7 +485,7 @@
   </ul>
 
   <footer>
-    <span>Dunwell · Work Log</span>
+    <span>Dunwell · Notes</span>
     <span>Updated 2026-07-14</span>
   </footer>
 </div>
@@ -495,7 +495,7 @@
     var root = document.documentElement;
     var btn = document.getElementById("themeToggle");
     var stored = null;
-    try { stored = localStorage.getItem("worklog.theme"); } catch (e) {}
+    try { stored = localStorage.getItem("notes.theme"); } catch (e) {}
     if (stored === "dark" || stored === "light") root.setAttribute("data-theme", stored);
     function current() {
       var attr = root.getAttribute("data-theme");
@@ -505,7 +505,7 @@
     btn.addEventListener("click", function () {
       var next = current() === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
-      try { localStorage.setItem("worklog.theme", next); } catch (e) {}
+      try { localStorage.setItem("notes.theme", next); } catch (e) {}
     });
   })();
 </script>
