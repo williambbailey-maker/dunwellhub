@@ -5,55 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Dunwell — Notes</title>
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ground: #e8ebe6;
-    --surface: #f4f6f2;
-    --ink: #1b231d;
-    --muted: #616b62;
-    --faint: #8a938a;
-    --line: #d3d8cf;
-    --accent: #8f3d2f;
-    --accent-soft: rgba(143, 61, 47, 0.1);
-    --good: #4f7a52;
-    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
-    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ground: #12160f;
-      --surface: #1a1f16;
-      --ink: #e7eae1;
-      --muted: #9aa694;
-      --faint: #6f7a6c;
-      --line: #2b332a;
-      --accent: #d8785f;
-      --accent-soft: rgba(216, 120, 95, 0.14);
-      --good: #8fbf8f;
-    }
-  }
-  :root[data-theme="light"] {
-    --ground: #e8ebe6;
-    --surface: #f4f6f2;
-    --ink: #1b231d;
-    --muted: #616b62;
-    --faint: #8a938a;
-    --line: #d3d8cf;
-    --accent: #8f3d2f;
-    --accent-soft: rgba(143, 61, 47, 0.1);
-    --good: #4f7a52;
-  }
-  :root[data-theme="dark"] {
-    --ground: #12160f;
-    --surface: #1a1f16;
-    --ink: #e7eae1;
-    --muted: #9aa694;
-    --faint: #6f7a6c;
-    --line: #2b332a;
-    --accent: #d8785f;
-    --accent-soft: rgba(216, 120, 95, 0.14);
-    --good: #8fbf8f;
+    --ground: #28374A;
+    --surface: rgba(241, 232, 214, 0.04);
+    --ink: #F1E8D6;
+    --muted: rgba(241, 232, 214, 0.62);
+    --faint: rgba(241, 232, 214, 0.4);
+    --line: rgba(241, 232, 214, 0.16);
+    --accent: #C9A876;
+    --accent-soft: rgba(201, 168, 118, 0.14);
+    --mono: 'JetBrains Mono', monospace;
+    --serif: 'Fraunces', serif;
+    --sans: 'Space Grotesk', sans-serif;
   }
 
   * { box-sizing: border-box; }
@@ -62,7 +31,7 @@
     margin: 0;
     background: var(--ground);
     color: var(--ink);
-    font-family: var(--serif);
+    font-family: var(--sans);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -91,22 +60,6 @@
     font-weight: 600;
   }
   .mast-mark .diamond { font-size: 0.62rem; vertical-align: 0.1em; margin-right: 0.5em; }
-
-  .theme-toggle {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: transparent;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 0.32rem 0.7rem;
-    cursor: pointer;
-    transition: border-color 0.15s ease, color 0.15s ease;
-  }
-  .theme-toggle:hover { color: var(--ink); border-color: var(--muted); }
-  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .mast-title {
     font-size: clamp(2.3rem, 7vw, 3.4rem);
@@ -271,8 +224,8 @@
     font-size: 0.62rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--good);
-    border: 1px solid var(--good);
+    color: var(--accent);
+    border: 1px solid var(--accent);
     border-radius: 999px;
     padding: 0.12rem 0.5rem;
     position: relative;
@@ -302,7 +255,7 @@
     width: 0.42rem;
     height: 0.42rem;
     border-radius: 50%;
-    background: var(--good);
+    background: var(--accent);
   }
   .changes li.removed::before { background: transparent; border: 1px solid var(--faint); }
 
@@ -310,6 +263,7 @@
     margin: 0.95rem 0 0;
     padding: 0.55rem 0 0.55rem 0.95rem;
     border-left: 2px solid var(--line);
+    font-family: var(--serif);
     font-style: italic;
     font-size: 0.96rem;
     color: var(--muted);
@@ -367,7 +321,6 @@
   <header class="masthead">
     <div class="mast-top">
       <span class="mast-mark"><span class="diamond">◆</span>Notes</span>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme">Theme</button>
     </div>
     <h1 class="mast-title">Changelog &amp; <em>diary</em></h1>
     <p class="mast-sub">A running record of studio work across Dunwell projects — what shipped, when, and the notes behind it. Newest first.</p>
@@ -490,24 +443,5 @@
   </footer>
 </div>
 
-<script>
-  (function () {
-    var root = document.documentElement;
-    var btn = document.getElementById("themeToggle");
-    var stored = null;
-    try { stored = localStorage.getItem("notes.theme"); } catch (e) {}
-    if (stored === "dark" || stored === "light") root.setAttribute("data-theme", stored);
-    function current() {
-      var attr = root.getAttribute("data-theme");
-      if (attr) return attr;
-      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    }
-    btn.addEventListener("click", function () {
-      var next = current() === "dark" ? "light" : "dark";
-      root.setAttribute("data-theme", next);
-      try { localStorage.setItem("notes.theme", next); } catch (e) {}
-    });
-  })();
-</script>
 </body>
 </html>
